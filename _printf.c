@@ -10,7 +10,7 @@ int _printf(const char * const format, ...)
      {
 		{"%s", printf_string}, 
                 {"%c", printf_char},
-		{"%%", printf_37},
+		{"%", print_percent},
 		{"%i", printf_int}, 
                 {"%d", printf_dec}, 
                 {"%r", printf_srev},
