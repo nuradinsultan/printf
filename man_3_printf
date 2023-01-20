@@ -34,8 +34,7 @@ These arguments are placed using the percentage '%' operator
 .RS
 #include "main.h"
 
-$ gcc -Wall -Werror -Wextra -pedantic -Wno-format *.c
-$ gcc -Wall -Werror -Wextra -pedantic -g -Wno-format *.c (for gdb debbuging)
+$ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c
 .RE
 
 .SS Printing
