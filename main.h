@@ -36,8 +36,8 @@ int unsigned_integer(va_list);
 int print_octal(va_list list);
 int print_hex(va_list list);
 int print_heX(va_list list);
-int print_exe_strings(va_list list);
-int print_pointer(va_list list);
+int printf_exe_strings(va_list list);
+int printf_pointer(va_list list);
 
 /*Helper functions*/
 unsigned int base_len(unsigned int, int);
