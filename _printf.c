@@ -1,62 +1,39 @@
 #include "main.h"
 
 /**
- * _printf - formatted output conversion and print data.
- * @format: input string.
- *
- * Return: number of chars printed.
+ * _printf - Receives the main string and all the necessary parameters to
+ * print a formated string
+ * @format: A string containing all the desired characters
+ * Return: A total count of the characters printed
  */
-
 int _printf(const char *format, ...)
 {
-	int i = 0, j = 0, buff_count = 0, prev_buff_count = 0;
-	char buffer[2000];
-	va_list arg;
-	call_t container[] = {
-		{'c', printf_char},
-                {'s', printf_str}, 
-                {'i', printf_int}, 
-                {'d', printf_int},
-		{'%', printf_perc}, 
-                {'b', printf_bin}, 
-                {'o', printf_oct},
-                {'x', printf_hex},
-		{'X', printf_X},
-                {'u', printf_uint}, 
-                {'R', printf_Root13}, 
-                {'r', printf_rev},
-                {'S', printf_exe_string},
-                {'p', printf_pointer}
-		{'\0', NULL}
+	int printed_chars;
+	conver_t f_list[] = {
+		{"c", print_char},
+		{"s", print_string},
+		{"%", print_percent},
+		{"d", print_integer},
+		{"i", print_integer},
+		{"b", print_binary},
+		{"r", print_reversed},
+		{"R", rot13},
+		{"u", unsigned_integer},
+		{"o", print_octal},
+		{"x", print_hex},
+		{"X", print_heX},
+                {"S", print_exc_string},
+		{"p", print_pointer},
+		{NULL, NULL}
 	};
+	va_list arg_list;
 
-	if (!format)
+	if (format == NULL)
 		return (-1);
-	va_start(arg, format);
-	while (format && format[i] != '\0')
-	{
-		if (format[i] == '%')
-		{
-			i++, prev_buff_count = buff_count;
-			for (j = 0; container[j].t != '\0'; j++)
-			{
-				if (format[i] == '\0')
-					break;
-				if (format[i] == container[j].t)
-				{
-					buff_count = container[j].f(buffer, arg, buff_count);
-					break;
-				}
-			}
-			if (buff_count == prev_buff_count && format[i])
-				i--, buffer[buff_count] = format[i], buff_count++;
-		}
-		else
-			buffer[buff_count] = format[i], buff_count++;
-		i++;
-	}
-	va_end(arg);
-	buffer[buff_count] = '\0';
-	print_buff(buffer, buff_count);
-	return (buff_count);
+
+	va_start(arg_list, format);
+	/*Calling parser function*/
+	printed_chars = parser(format, f_list, arg_list);
+	va_end(arg_list);
+	return (printed_chars);
 }
