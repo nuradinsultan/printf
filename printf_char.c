@@ -1,13 +1,17 @@
 #include "main.h"
 
 /**
- * _write_char - writes the character c to stdout
- * @c: The character to print
- *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * printf_char - returns the character
+ * @buff_dest: buffer
+ * @arg: list of arguments
+ * @buff_count: index of buffer pointer
+ * Return: buffer index
  */
-int _write_char(char c)
+int printf_char(char *buff_dest, va_list arg, int buff_count)
 {
-	return (write(1, &c, 1));
+	char c = va_arg(arg, int);
+
+	buff_dest[buff_count] = c;
+
+	return (++buff_count);
 }
