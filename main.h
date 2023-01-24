@@ -20,33 +20,36 @@
 
 typedef struct format
 {
-	char *id;
-	int (*f)();
+	char *c;
+	int (*f)(va_list);
 } convert_match;
 
-int printf_pointer(va_list val);
-int printf_hex_aux(unsigned long int num);
-int printf_HEX_aux(unsigned int num);
-int printf_exclusive_string(va_list val);
-int printf_HEX(va_list val);
-int printf_hex(va_list val);
-int printf_oct(va_list val);
-int printf_unsigned(va_list args);
-int printf_bin(va_list val);
-int printf_srev(va_list args);
-int printf_rot13(va_list args);
-int printf_int(va_list args);
-int printf_dec(va_list args);
-int _strlen(char *s);
-int *_strcpy(char *dest, char *src);
-int _strlenc(const char *s);
-int rev_string(char *s);
-int _strlenc(const char *s);
-int printf_37(void);
-int printf_char(va_list val);
-int printf_string(va_list val);
-int _write_char(char c);
 int _printf(const char *format, ...);
+int print_char(va_list ap);
+int print_str(va_list ap);
+int print_nbr(va_list ap);
+int print_binary(va_list ap);
+int print_octal(va_list ap);
+int print_hexa_lower(va_list ap);
+int print_hexa_upper(va_list ap);
+int print_unsigned(va_list ap);
+int print_str_unprintable(va_list ap);
+int print_str_reverse(va_list ap);
+int print_ptr(va_list ap);
+int print_rot13(va_list ap);
+int print_percent(va_list ap __attribute__((unused)));
+int print_number(int n);
+int print_unsigned_number(unsigned int n);
+int _putchar(char c);
+int _puts(char *str, int ascii);
+int _nbr_len(int prmNumber);
+int _strlen_recursion(char *s);
+int convert_alpha_numeric(int nb, int upper);
+char *convert_rot13(char *str);
+char *convert_base(unsigned long nb, unsigned int base, int upper);
+char *_strdup(char *str);
+char *convert_base_pointer(unsigned long p);
+
 
 #endif
 
