@@ -1,52 +1,62 @@
 #include "main.h"
+
 /**
- * _printf - is a function that selects the correct function to print.
- * @format: identifier to look for.
- * Return: the length of the string.
+ * _printf - formatted output conversion and print data.
+ * @format: input string.
+ *
+ * Return: number of chars printed.
  */
-int _printf(const char * const format, ...)
+
+int _printf(const char *format, ...)
 {
-	convert_match m[] = 
-     {
-		{"%s", printf_string}, 
-                {"%c", printf_char},
-		{"%", print_percent},
-		{"%i", printf_int}, 
-                {"%d", printf_dec}, 
-                {"%r", printf_srev},
-		{"%R", printf_rot13}, 
-                {"%b", printf_bin}, 
-                {"%u", printf_unsigned},
-		{"%o", printf_oct}, 
-                {"%x", printf_hex},
-                {"%X", printf_HEX},
-		{"%S", printf_exclusive_string}, 
-                {"%p", printf_pointer}
+	int i = 0, j = 0, buff_count = 0, prev_buff_count = 0;
+	char buffer[2000];
+	va_list arg;
+	call_t container[] = {
+		{'c', printf_char},
+                {'s', printf_str}, 
+                {'i', printf_int}, 
+                {'d', printf_int},
+		{'%', printf_perc}, 
+                {'b', printf_bin}, 
+                {'o', printf_oct},
+                {'x', printf_hex},
+		{'X', printf_X},
+                {'u', printf_uint}, 
+                {'R', printf_Root13}, 
+                {'r', printf_rev},
+                {'S', printf_exe_string},
+                {'p', printf_pointer}
+		{'\0', NULL}
 	};
 
-	va_list args;
-	int i = 0, j, len = 0;
-
-	va_start(args, format);
-	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
+	if (!format)
 		return (-1);
-
-Here:
-	while (format[i] != '\0')
+	va_start(arg, format);
+	while (format && format[i] != '\0')
 	{
-		j = 13;
-		while (j >= 0)
+		if (format[i] == '%')
 		{
-			if (m[j].id[0] == format[i] && m[j].id[1] == format[i + 1])
+			i++, prev_buff_count = buff_count;
+			for (j = 0; container[j].t != '\0'; j++)
 			{
-				len += m[j].f(args);
-				i = i + 2;
-				goto Here;
+				if (format[i] == '\0')
+					break;
+				if (format[i] == container[j].t)
+				{
+					buff_count = container[j].f(buffer, arg, buff_count);
+					break;
+				}
 			}
-			j--;
+			if (buff_count == prev_buff_count && format[i])
+				i--, buffer[buff_count] = format[i], buff_count++;
 		}
-		
+		else
+			buffer[buff_count] = format[i], buff_count++;
+		i++;
 	}
-	va_end(args);
-	return (len);
+	va_end(arg);
+	buffer[buff_count] = '\0';
+	print_buff(buffer, buff_count);
+	return (buff_count);
 }
