@@ -1,6 +1,5 @@
-#ifndef _MAIN_H_
-#define _MAIN_H_
-#define INT_BITS (4 * 8)
+#ifndef _MAIN_H
+#define _MAIN_H
 
 #include <stdarg.h>
 #include <unistd.h>
@@ -9,35 +8,43 @@
 #include <limits.h>
 
 /**
- * struct call - struct call
- * @t: t - flag for data type
- * @f: function - assocated function
- *
- */
-typedef struct call
+* struct convert - defines a structure for symbols and functions
+*
+* @sym: The operator
+* @f: The function associated
+*/
+struct convert
 {
-	char t;
-	int (*f)(char *, va_list, int);
-} call_t;
+	char *sym;
+	int (*f)(va_list);
+};
+typedef struct convert conver_t;
 
+/*Main functions*/
+int parser(const char *format, conver_t f_list[], va_list arg_list);
 int _printf(const char *format, ...);
-int buff_append(char *buff_dest, va_list arg, int buff_count, char type);
-int print_buff(char *buff, unsigned int nbuff);
-int str_len(char *s);
-int printf_unsigned(va_list args);
-char *_strcpy(char *dest, char *src);
-int printf_char(char *buff_dest, va_list arg, int buff_count);
-int printf_str(char *buff_dest, va_list arg, int buff_count);
-int printf_int(char *buff_dest, va_list list, int buff_count);
-int printf_perc(char *buff_dest, va_list arg, int buff_count);
-int printf_bin(char *buff_dest, va_list arg, int buff_count);
-int printf_oct(char *buff_dest, va_list arg, int buff_count);
-int printf_hex(char *buff_dest, va_list arg, int buff_count);
-int printf_X(char *buff_dest, va_list arg, int buff_count);
-int printf_uint(char *buff_dest, va_list arg, int buff_count);
-int printf_rev(char *buff_dest, va_list arg, int buff_count);
-int printf_R13(char *buff_dest, va_list arg, int buff_count);
-int printf_exe_string(char *buff_dest, va_list arg, int buff_count);
-int printf_pointer(char *buff_dest, va_list arg, int buff_count);
+int _write_char(char);
+int print_char(va_list);
+int print_string(va_list);
+int print_percent(va_list);
+int print_integer(va_list);
+int print_number(va_list);
+int print_binary(va_list);
+int print_reversed(va_list arg);
+int rot13(va_list);
+int unsigned_integer(va_list);
+int print_octal(va_list list);
+int print_hex(va_list list);
+int print_heX(va_list list);
+int print_exe_strings(va_list list);
+int print_pointer(va_list list);
+
+/*Helper functions*/
+unsigned int base_len(unsigned int, int);
+char *rev_string(char *);
+void write_base(char *str);
+char *_memcpy(char *dest, char *src, unsigned int n);
+int print_unsgined_number(unsigned int);
+
 
 #endif
