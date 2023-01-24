@@ -1,29 +1,6 @@
-#ifndef _MAIN_H
-#define _MAIN_H
-
-
-
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef MaIN_H
+#define MAIN_H
 #include <stdarg.h>
-#include <limits.h>
-#include <unistd.h>
-
-
-
-/**
- * struct format - match the conversion specifiers for printf
- * @id: type char pointer of the specifier i.e (l, h) for (d, i, u, o, x, X)
- * @f: type pointer to function for the conversion specifier
- *
- */
-
-typedef struct format
-{
-	char *c;
-	int (*f)(va_list);
-} convert_match;
-
 int _printf(const char *format, ...);
 int print_char(va_list ap);
 int print_str(va_list ap);
@@ -50,7 +27,15 @@ char *convert_base(unsigned long nb, unsigned int base, int upper);
 char *_strdup(char *str);
 char *convert_base_pointer(unsigned long p);
 
+/**
+ * struct flags_printf - struct conversion to function
+ * @c: flag string
+ * @f: pointer to func
+ */
 
+typedef struct flags_printf
+{
+	char *c;
+	int (*f)(va_list);
+} flags_p;
 #endif
-
-
