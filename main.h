@@ -1,48 +1,42 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef _MAIN_H_
+#define _MAIN_H_
+#define INT_BITS (4 * 8)
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <stdarg.h>
-#include <limits.h>
 #include <unistd.h>
-
-
+#include <stdlib.h>
+#include <stdio.h>
+#include <limits.h>
 
 /**
- * struct format - match the conversion specifiers for printf
- * @id: type char pointer of the specifier i.e (l, h) for (d, i, u, o, x, X)
- * @f: type pointer to function for the conversion specifier
+ * struct call - struct call
+ * @t: t - flag for data type
+ * @f: function - assocated function
  *
  */
-
-typedef struct format
+typedef struct call
 {
-	char *id;
-	int (*f)();
-} convert_match;
+	char t;
+	int (*f)(char *, va_list, int);
+} call_t;
 
-int printf_pointer(va_list val);
-int printf_hex_aux(unsigned long int num);
-int printf_HEX_aux(unsigned int num);
-int printf_exclusive_string(va_list val);
-int printf_HEX(va_list val);
-int printf_hex(va_list val);
-int printf_oct(va_list val);
-int printf_unsigned(va_list args);
-int printf_bin(va_list val);
-int printf_srev(va_list args);
-int printf_rot13(va_list args);
-int printf_int(va_list args);
-int printf_dec(va_list args);
-int _strlen(char *s);
-int *_strcpy(char *dest, char *src);
-int _strlenc(const char *s);
-int rev_string(char *s);
-int _strlenc(const char *s);
-int printf_37(void);
-int _write_char(char c);
-int printf_string(va_list val);
 int _printf(const char *format, ...);
+int buff_append(char *buff_dest, va_list arg, int buff_count, char type);
+int print_buff(char *buff, unsigned int nbuff);
+int str_len(char *s);
+char *_strcpy(char *dest, char *src);
+int printf_char(char *buff_dest, va_list arg, int buff_count);
+int printf_str(char *buff_dest, va_list arg, int buff_count);
+int printf_int(char *buff_dest, va_list list, int buff_count);
+int printf_perc(char *buff_dest, va_list arg, int buff_count);
+int printf_bin(char *buff_dest, va_list arg, int buff_count);
+int printf_oct(char *buff_dest, va_list arg, int buff_count);
+int printf_hex(char *buff_dest, va_list arg, int buff_count);
+int printf_X(char *buff_dest, va_list arg, int buff_count);
+int printf_uint(char *buff_dest, va_list arg, int buff_count);
+int printf_rev(char *buff_dest, va_list arg, int buff_count);
+int printf_R13(char *buff_dest, va_list arg, int buff_count);
+int printf_exe_string(char *buff_dest, va_list arg, int buff_count);
+int printf_pointer(char *buff_dest, va_list arg, int buff_count);
 
 #endif
