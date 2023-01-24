@@ -24,6 +24,7 @@ int _printf(const char *format, ...);
 int buff_append(char *buff_dest, va_list arg, int buff_count, char type);
 int print_buff(char *buff, unsigned int nbuff);
 int str_len(char *s);
+int printf_unsigned(va_list args);
 char *_strcpy(char *dest, char *src);
 int printf_char(char *buff_dest, va_list arg, int buff_count);
 int printf_str(char *buff_dest, va_list arg, int buff_count);
