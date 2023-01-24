@@ -1,90 +1,45 @@
 #include "main.h"
-/**
- * printf_int - prints integer
- * @args: argument to print
- * Return: number of characters printed
- */
-int printf_int(va_list args)
-{
-	int n = va_arg(args, int);
-	int num, last = n % 10, digit, exp = 1;
-	int  i = 1;
-
-	n = n / 10;
-	num = n;
-
-	if (last < 0)
-	{
-		_putchar('-');
-		num = -num;
-		n = -n;
-		last = -last;
-		i++;
-	}
-	if (num > 0)
-	{
-		while (num / 10 != 0)
-		{
-			exp = exp * 10;
-			num = num / 10;
-		}
-		num = n;
-		while (exp > 0)
-		{
-			digit = num / exp;
-			_putchar(digit + '0');
-			num = num - (digit * exp);
-			exp = exp / 10;
-			i++;
-		}
-	}
-	_putchar(last + '0');
-
-	return (i);
-}
 
 /**
- * printf_dec - prints decimal
- * @args: argument to print
- * Return: number of characters printed
+ * printf_int - substitute %i by argument number
+ * @buff_dest: string to change
+ * @arg: va_list arg to change
+ * @buff_count: index of dst where the c of %c is
+ * Return: New index
  */
-
-int printf_dec(va_list args)
+int printf_int(char *buff_dest, va_list arg, int buff_count)
 {
-	int n = va_arg(args, int);
-	int num, last = n % 10, digit;
-	int  i = 1;
-	int exp = 1;
+	int tens = 1;
+	unsigned int tmp;
+	int number;
 
-	n = n / 10;
-	num = n;
+	number = va_arg(arg, int);
 
-	if (last < 0)
+	if (number < 0)
 	{
-		_putchar('-');
-		num = -num;
-		n = -n;
-		last = -last;
-		i++;
+		buff_dest[buff_count] = '-';
+		number *= -1;
+		buff_count++;
 	}
-	if (num > 0)
-	{
-		while (num / 10 != 0)
-		{
-			exp = exp * 10;
-			num = num / 10;
-		}
-		num = n;
-		while (exp > 0)
-		{
-			digit = num / exp;
-			_putchar(digit + '0');
-			num = num - (digit * exp);
-			exp = exp / 10;
-			i++;
-		}
-	}
-	_putchar(last + '0');
+	tmp = number;
 
-	return (i);
+	if (number == INT_MIN)
+		tmp++;
+
+	while (tmp > 9)
+	{
+		tens *= 10;
+		tmp /= 10;
+	}
+
+	tmp = number;
+	while (tens > 0)
+	{
+		buff_dest[buff_count] = ('0' + tmp / tens);
+		tmp %= tens;
+		tens /= 10;
+		buff_count++;
+	}
+
+	return (buff_count);
 }
