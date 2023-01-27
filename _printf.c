@@ -16,6 +16,7 @@ int _printf(const char *format, ...)
 	MyPrint ops[] = {
 		{"c", op_character},
 		{"s", op_string},
+                {"%", op_percent},
 		{"i", op_integer},
 		{"d", op_integer},
 		{"r", op_reverse},
@@ -27,6 +28,7 @@ int _printf(const char *format, ...)
 		{"X", op_HEX},
 		{"S", op_SString},
 		{"p", op_address},
+                {'\0', NULL}
 	};
 
 	if (format == NULL)
